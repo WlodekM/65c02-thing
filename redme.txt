@@ -1,0 +1,5 @@
+deno -A assembler.ts && deno -A ramgen.ts && hexdump -C iram.bin
+this shit compiles
+
+deno -A runtime_new.ts
+this shit runs

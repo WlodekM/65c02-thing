@@ -1,0 +1,10 @@
+# the assembled text code
+*.p
+ram.bin
+iram.bin
+.vscode/6502-project.json
+code.o
+*.bin
+*.img
+thefile
+riscv

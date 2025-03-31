@@ -1,0 +1,62 @@
+start:
+    ; init stack
+    mov a 0x6000
+    mov b 0x7000
+    str b a
+    copyLoop:
+        mov a [codePointer]
+        ld a a
+        mov b 0x6000
+        add c a b
+        mov a [targetPointer]
+        str c a
+
+        mov a codeStart
+        mov b [codePointer]
+        ld b b
+        add c a b
+        
+        mov a [targetPointer]
+        ld a a
+        ; swp a c
+        ; a <- $b
+        ld d c
+        push d ; push b
+        ld d a
+        ; push a ; push a
+        str c d ; $b <- a
+        pop d
+        ; $a <- b
+        str a d
+        ; swpm c b
+        
+        mov a [codePointer]
+        ld a a
+        mov b 1
+        add c a b
+        ; mov a
+        str c [codePointer] 
+        ; continue loop
+            mov b [targetPointer]
+            ; (byte we just copied) -> B
+            ld b b
+            ; (next byte) -> A
+            ld a c
+            ; C = A (aka next byte) == 0
+            cmr c a 0
+            ; A = B (aka last byte) == 1E (end instruction)
+            cmr a b 0x1e
+            swp c b ; C -> B
+            and c a b; c=a&&b
+            mov a 1
+            cmp c a ; c==1?
+            jz copyLoop ; continue if c != 1
+    jmp 0x6001
+
+
+targetPointer:
+.hex 0
+codePointer:
+.hex 0
+; start of bootloader
+codeStart:

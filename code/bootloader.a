@@ -1,0 +1,109 @@
+.offset 0x6000 ; bootloader is in 0x6000, copied there by another script
+start:
+    mov a 0
+    str a [gottenNZ]
+    ; currSector -> A
+    mov a [currSector]
+    ld a a
+    str a 0x7cff
+
+    mov b 512
+    mul
+    str c [sectorOffset]
+
+    mov a 0
+    str a [bytePointer]
+
+    mov a 0
+    str a [ptrThing]
+
+    copySector:
+        mov a [sectorOffset]
+        ld a a
+        mov b [bytePointer]
+        ld b b
+        add c a b
+        ;
+        swp a c
+        mov b 0x8000 ; default code position
+        add c a b
+        str c [targetPointer]
+
+        ; ld a [sectorOffset]
+        mov a 0x7d00
+        ; add
+        ; swp c a
+        mov b [ptrThing]
+        ld b b
+        add c a b
+        mov b [targetPointer]
+        ld b b
+        ; swp c b
+        ; a <- $b
+        ld a b
+        push a ; push b
+        ld a c
+        ; push c ; push c
+        str b a ; $b <- c
+        pop a
+        ; $c <- b
+        str c a
+        ; swpm c b
+
+        ld a c
+        mov b 0
+        cmr a a b
+        mov b 1
+        xor c a b
+        swp a c
+        mov b [gottenNZ]
+        ld b b
+        or c a b
+        mov a [gottenNZ]
+        str c a
+
+        ;continue loop
+        ; pointer to 8xxx
+        mov a [ptrThing]
+        ld a a
+        mov b 1
+        add c a b
+        mov a [ptrThing]
+        str c a
+
+        ; pointer offset for sector thing
+        mov a [bytePointer]
+        ld a a
+        mov b 1
+        add
+        str c [bytePointer]
+
+        ; offset == 513
+        cmp c 513
+        jz copySector
+    ; continue main loop
+    mov a [currSector]
+    ld a a
+    mov b 1
+    add c a b
+    mov a [currSector]
+    str c a
+    mov a [gottenNZ]
+    ld a a
+    cmp a 0
+    jz start
+    ;escaped
+    jmp 0x8001
+
+ptrThing:
+.hex 0
+currSector:
+.hex 0
+sectorOffset:
+.hex 0
+bytePointer:
+.hex 0
+gottenNZ:
+.hex 0
+targetPointer:
+.hex 0
