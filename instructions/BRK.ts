@@ -5,6 +5,9 @@ export default function (this: The65c02, mode: string) {
         case 'implied':
             this.io.interruptRequest.HI()
             //TODO: push shit onto stack
+            this.push(this.programCounter.num() & 0x00FF)
+            this.push(this.programCounter.num() & 0xFF00)
+            this.push(this.status.num())
             this.io.data.set(this.programCounter.num() & 0x00FF)
             this.io.address.set(0xFFFF)
             this.write()
