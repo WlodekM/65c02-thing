@@ -26,7 +26,7 @@ await cpu.loadInstructions()
 
 // mem address $0000
 ram[0xFFFC] = 0x00
-ram[0xFFFD] = 0x00
+ram[0xFFFD] = 0x01
 
 //TODO: read code from file
 // const code = [
@@ -43,7 +43,7 @@ const code = Deno.readFileSync('a.out')
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {
     const byte = code[offset];
-    ram[offset] = byte;
+    ram[256 + offset] = byte;
 }
 
 // pull RESB low to reset the 65c02
@@ -54,7 +54,13 @@ cpu.cycle()
 cpu.io.reset.HI()
 
 while (!cpu.io.interruptRequest.high) {
-    cpu.cycle()
+    cpu.cycle();
+    const i = new Uint8Array(8);
+    await Deno.stdin.read(i);
+    if (i[0] == 'b'.charCodeAt(0)) {
+        console.log('BREAK!!')
+        break;
+    }
 }
 
 console.log('end of execution\n\nIO status:')
