@@ -1,0 +1,606 @@
+{
+    "10": {
+        "mnemonic": "BPL",
+        "mode": "relative"
+    },
+    "11": {
+        "mnemonic": "ORA",
+        "mode": "indirect, Y-indexed"
+    },
+    "15": {
+        "mnemonic": "ORA",
+        "mode": "zero-page, X-indexed"
+    },
+    "16": {
+        "mnemonic": "ASL",
+        "mode": "zero-page, X-indexed"
+    },
+    "18": {
+        "mnemonic": "CLC",
+        "mode": "implied"
+    },
+    "19": {
+        "mnemonic": "ORA",
+        "mode": "absolute, Y-indexed"
+    },
+    "20": {
+        "mnemonic": "JSR",
+        "mode": "absolute"
+    },
+    "21": {
+        "mnemonic": "AND",
+        "mode": "X-indexed, indirect"
+    },
+    "24": {
+        "mnemonic": "BIT",
+        "mode": "zero-page"
+    },
+    "25": {
+        "mnemonic": "AND",
+        "mode": "zero-page"
+    },
+    "26": {
+        "mnemonic": "ROL",
+        "mode": "zero-page"
+    },
+    "28": {
+        "mnemonic": "PLP",
+        "mode": "implied"
+    },
+    "29": {
+        "mnemonic": "AND",
+        "mode": "immediate"
+    },
+    "30": {
+        "mnemonic": "BMI",
+        "mode": "relative"
+    },
+    "31": {
+        "mnemonic": "AND",
+        "mode": "indirect, Y-indexed"
+    },
+    "35": {
+        "mnemonic": "AND",
+        "mode": "zero-page, X-indexed"
+    },
+    "36": {
+        "mnemonic": "ROL",
+        "mode": "zero-page, X-indexed"
+    },
+    "38": {
+        "mnemonic": "SEC",
+        "mode": "implied"
+    },
+    "39": {
+        "mnemonic": "AND",
+        "mode": "absolute, Y-indexed"
+    },
+    "40": {
+        "mnemonic": "RTI",
+        "mode": "implied"
+    },
+    "41": {
+        "mnemonic": "EOR",
+        "mode": "X-indexed, indirect"
+    },
+    "45": {
+        "mnemonic": "EOR",
+        "mode": "zero-page"
+    },
+    "46": {
+        "mnemonic": "LSR",
+        "mode": "zero-page"
+    },
+    "48": {
+        "mnemonic": "PHA",
+        "mode": "implied"
+    },
+    "49": {
+        "mnemonic": "EOR",
+        "mode": "immediate"
+    },
+    "50": {
+        "mnemonic": "BVC",
+        "mode": "relative"
+    },
+    "51": {
+        "mnemonic": "EOR",
+        "mode": "indirect, Y-indexed"
+    },
+    "55": {
+        "mnemonic": "EOR",
+        "mode": "zero-page, X-indexed"
+    },
+    "56": {
+        "mnemonic": "LSR",
+        "mode": "zero-page, X-indexed"
+    },
+    "58": {
+        "mnemonic": "CLI",
+        "mode": "implied"
+    },
+    "59": {
+        "mnemonic": "EOR",
+        "mode": "absolute, Y-indexed"
+    },
+    "60": {
+        "mnemonic": "RTS",
+        "mode": "implied"
+    },
+    "61": {
+        "mnemonic": "ADC",
+        "mode": "X-indexed, indirect"
+    },
+    "65": {
+        "mnemonic": "ADC",
+        "mode": "zero-page"
+    },
+    "66": {
+        "mnemonic": "ROR",
+        "mode": "zero-page"
+    },
+    "68": {
+        "mnemonic": "PLA",
+        "mode": "implied"
+    },
+    "69": {
+        "mnemonic": "ADC",
+        "mode": "immediate"
+    },
+    "70": {
+        "mnemonic": "BVS",
+        "mode": "relative"
+    },
+    "71": {
+        "mnemonic": "ADC",
+        "mode": "indirect, Y-indexed"
+    },
+    "75": {
+        "mnemonic": "ADC",
+        "mode": "zero-page, X-indexed"
+    },
+    "76": {
+        "mnemonic": "ROR",
+        "mode": "zero-page, X-indexed"
+    },
+    "78": {
+        "mnemonic": "SEI",
+        "mode": "implied"
+    },
+    "79": {
+        "mnemonic": "ADC",
+        "mode": "absolute, Y-indexed"
+    },
+    "81": {
+        "mnemonic": "STA",
+        "mode": "X-indexed, indirect"
+    },
+    "84": {
+        "mnemonic": "STY",
+        "mode": "zero-page"
+    },
+    "85": {
+        "mnemonic": "STA",
+        "mode": "zero-page"
+    },
+    "86": {
+        "mnemonic": "STX",
+        "mode": "zero-page"
+    },
+    "88": {
+        "mnemonic": "DEY",
+        "mode": "implied"
+    },
+    "90": {
+        "mnemonic": "BCC",
+        "mode": "relative"
+    },
+    "91": {
+        "mnemonic": "STA",
+        "mode": "indirect, Y-indexed"
+    },
+    "94": {
+        "mnemonic": "STY",
+        "mode": "zero-page, X-indexed"
+    },
+    "95": {
+        "mnemonic": "STA; InsItr",
+        "mode": "zero-page, X-indexed"
+    },
+    "96": {
+        "mnemonic": "STX",
+        "mode": "zero-page, Y-indexed"
+    },
+    "98": {
+        "mnemonic": "TYA",
+        "mode": "implied"
+    },
+    "99": {
+        "mnemonic": "STA",
+        "mode": "absolute, Y-indexed"
+    },
+    "00": {
+        "mnemonic": "BRK",
+        "mode": "implied"
+    },
+    "01": {
+        "mnemonic": "ORA",
+        "mode": "X-indexed, indirect"
+    },
+    "05": {
+        "mnemonic": "ORA",
+        "mode": "zero-page"
+    },
+    "06": {
+        "mnemonic": "ASL",
+        "mode": "zero-page"
+    },
+    "08": {
+        "mnemonic": "PHP",
+        "mode": "implied"
+    },
+    "09": {
+        "mnemonic": "ORA",
+        "mode": "immediate"
+    },
+    "0a": {
+        "mnemonic": "ASL",
+        "mode": "accumulator (implied)"
+    },
+    "0d": {
+        "mnemonic": "ORA",
+        "mode": "absolute"
+    },
+    "0e": {
+        "mnemonic": "ASL",
+        "mode": "absolute"
+    },
+    "1d": {
+        "mnemonic": "ORA",
+        "mode": "absolute, X-indexed"
+    },
+    "1e": {
+        "mnemonic": "ASL",
+        "mode": "absolute, X-indexed"
+    },
+    "2a": {
+        "mnemonic": "ROL",
+        "mode": "accumulator (implied)"
+    },
+    "2c": {
+        "mnemonic": "BIT",
+        "mode": "absolute"
+    },
+    "2d": {
+        "mnemonic": "AND",
+        "mode": "absolute"
+    },
+    "2e": {
+        "mnemonic": "ROL",
+        "mode": "absolute"
+    },
+    "3d": {
+        "mnemonic": "AND",
+        "mode": "absolute, X-indexed"
+    },
+    "3e": {
+        "mnemonic": "ROL",
+        "mode": "absolute, X-indexed"
+    },
+    "4a": {
+        "mnemonic": "LSR",
+        "mode": "accumulator (implied)"
+    },
+    "4c": {
+        "mnemonic": "JMP",
+        "mode": "absolute"
+    },
+    "4d": {
+        "mnemonic": "EOR",
+        "mode": "absolute"
+    },
+    "4e": {
+        "mnemonic": "LSR",
+        "mode": "absolute"
+    },
+    "5d": {
+        "mnemonic": "EOR",
+        "mode": "absolute, X-indexed"
+    },
+    "5e": {
+        "mnemonic": "LSR",
+        "mode": "absolute, X-indexed"
+    },
+    "6a": {
+        "mnemonic": "ROR",
+        "mode": "accumulator (implied)"
+    },
+    "6c": {
+        "mnemonic": "JMP",
+        "mode": "indirect"
+    },
+    "6d": {
+        "mnemonic": "ADC",
+        "mode": "absolute"
+    },
+    "6e": {
+        "mnemonic": "ROR",
+        "mode": "absolute"
+    },
+    "7d": {
+        "mnemonic": "ADC",
+        "mode": "absolute, X-indexed"
+    },
+    "7e": {
+        "mnemonic": "ROR",
+        "mode": "absolute, X-indexed"
+    },
+    "8a": {
+        "mnemonic": "TXA",
+        "mode": "implied"
+    },
+    "8c": {
+        "mnemonic": "STY",
+        "mode": "absolute"
+    },
+    "8d": {
+        "mnemonic": "STA",
+        "mode": "absolute"
+    },
+    "8e": {
+        "mnemonic": "STX",
+        "mode": "absolute"
+    },
+    "9a": {
+        "mnemonic": "TXS",
+        "mode": "implied"
+    },
+    "9d": {
+        "mnemonic": "STA",
+        "mode": "absolute, X-indexed"
+    },
+    "a0": {
+        "mnemonic": "LDY",
+        "mode": "immediate"
+    },
+    "a1": {
+        "mnemonic": "LDA",
+        "mode": "X-indexed, indirect"
+    },
+    "a2": {
+        "mnemonic": "LDX",
+        "mode": "immediate"
+    },
+    "a4": {
+        "mnemonic": "LDY",
+        "mode": "zero-page"
+    },
+    "a5": {
+        "mnemonic": "LDA",
+        "mode": "zero-page"
+    },
+    "a6": {
+        "mnemonic": "LDX",
+        "mode": "zero-page"
+    },
+    "a8": {
+        "mnemonic": "TAY",
+        "mode": "implied"
+    },
+    "a9": {
+        "mnemonic": "LDA",
+        "mode": "immediate"
+    },
+    "aa": {
+        "mnemonic": "TAX",
+        "mode": "implied"
+    },
+    "ac": {
+        "mnemonic": "LDY",
+        "mode": "absolute"
+    },
+    "ad": {
+        "mnemonic": "LDA",
+        "mode": "absolute"
+    },
+    "ae": {
+        "mnemonic": "LDX",
+        "mode": "absolute"
+    },
+    "b0": {
+        "mnemonic": "BCS",
+        "mode": "relative"
+    },
+    "b1": {
+        "mnemonic": "LDA",
+        "mode": "indirect, Y-indexed"
+    },
+    "b4": {
+        "mnemonic": "LDY",
+        "mode": "zero-page, X-indexed"
+    },
+    "b5": {
+        "mnemonic": "LDA",
+        "mode": "zero-page, X-indexed"
+    },
+    "b6": {
+        "mnemonic": "LDX",
+        "mode": "zero-page, Y-indexed"
+    },
+    "b8": {
+        "mnemonic": "CLV",
+        "mode": "implied"
+    },
+    "b9": {
+        "mnemonic": "LDA",
+        "mode": "absolute, Y-indexed"
+    },
+    "ba": {
+        "mnemonic": "TSX",
+        "mode": "implied"
+    },
+    "bc": {
+        "mnemonic": "LDY",
+        "mode": "absolute, X-indexed"
+    },
+    "bd": {
+        "mnemonic": "LDA",
+        "mode": "absolute, X-indexed"
+    },
+    "be": {
+        "mnemonic": "LDX",
+        "mode": "absolute, Y-indexed"
+    },
+    "c0": {
+        "mnemonic": "CPY",
+        "mode": "immediate"
+    },
+    "c1": {
+        "mnemonic": "CMP",
+        "mode": "X-indexed, indirect"
+    },
+    "c4": {
+        "mnemonic": "CPY",
+        "mode": "zero-page"
+    },
+    "c5": {
+        "mnemonic": "CMP",
+        "mode": "zero-page"
+    },
+    "c6": {
+        "mnemonic": "DEC",
+        "mode": "zero-page"
+    },
+    "c8": {
+        "mnemonic": "INY",
+        "mode": "implied"
+    },
+    "c9": {
+        "mnemonic": "CMP",
+        "mode": "immediate"
+    },
+    "ca": {
+        "mnemonic": "DEX",
+        "mode": "implied"
+    },
+    "cc": {
+        "mnemonic": "CPY",
+        "mode": "absolute"
+    },
+    "cd": {
+        "mnemonic": "CMP",
+        "mode": "absolute"
+    },
+    "ce": {
+        "mnemonic": "DEC",
+        "mode": "absolute"
+    },
+    "d0": {
+        "mnemonic": "BNE",
+        "mode": "relative"
+    },
+    "d1": {
+        "mnemonic": "CMP",
+        "mode": "indirect, Y-indexed"
+    },
+    "d5": {
+        "mnemonic": "CMP",
+        "mode": "zero-page, X-indexed"
+    },
+    "d6": {
+        "mnemonic": "DEC",
+        "mode": "zero-page, X-indexed"
+    },
+    "d8": {
+        "mnemonic": "CLD",
+        "mode": "implied"
+    },
+    "d9": {
+        "mnemonic": "CMP",
+        "mode": "absolute, Y-indexed"
+    },
+    "dd": {
+        "mnemonic": "CMP",
+        "mode": "absolute, X-indexed"
+    },
+    "de": {
+        "mnemonic": "DEC",
+        "mode": "absolute, X-indexed"
+    },
+    "e0": {
+        "mnemonic": "CPX",
+        "mode": "immediate"
+    },
+    "e1": {
+        "mnemonic": "SBC",
+        "mode": "X-indexed, indirect"
+    },
+    "e4": {
+        "mnemonic": "CPX",
+        "mode": "zero-page"
+    },
+    "e5": {
+        "mnemonic": "SBC",
+        "mode": "zero-page"
+    },
+    "e6": {
+        "mnemonic": "INC",
+        "mode": "zero-page"
+    },
+    "e8": {
+        "mnemonic": "INX",
+        "mode": "implied"
+    },
+    "e9": {
+        "mnemonic": "SBC",
+        "mode": "immediate"
+    },
+    "ea": {
+        "mnemonic": "NOP",
+        "mode": "implied"
+    },
+    "ec": {
+        "mnemonic": "CPX",
+        "mode": "absolute"
+    },
+    "ed": {
+        "mnemonic": "SBC",
+        "mode": "absolute"
+    },
+    "ee": {
+        "mnemonic": "INC",
+        "mode": "absolute"
+    },
+    "f0": {
+        "mnemonic": "BEQ",
+        "mode": "relative"
+    },
+    "f1": {
+        "mnemonic": "SBC",
+        "mode": "indirect, Y-indexed"
+    },
+    "f5": {
+        "mnemonic": "SBC",
+        "mode": "zero-page, X-indexed"
+    },
+    "f6": {
+        "mnemonic": "INC",
+        "mode": "zero-page, X-indexed"
+    },
+    "f8": {
+        "mnemonic": "SED",
+        "mode": "implied"
+    },
+    "f9": {
+        "mnemonic": "SBC",
+        "mode": "absolute, Y-indexed"
+    },
+    "fd": {
+        "mnemonic": "SBC",
+        "mode": "absolute, X-indexed"
+    },
+    "fe": {
+        "mnemonic": "INC",
+        "mode": "absolute, X-indexed"
+    }
+}
