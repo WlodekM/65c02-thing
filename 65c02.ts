@@ -12,6 +12,8 @@ export class BitField {
         this.bits[bit] = value;
     }
     set(value: number) {
+        // if (this.num() == 259 && value == 0)
+        //     throw new Error('debug')
         for (let bit = 0; bit < this.bits.length; bit++) {
             const mask: number = 1 << bit;
             this.setBit(bit, (value & mask) != 0)
@@ -39,6 +41,7 @@ export class Register<T=number> extends BitField {
         this.set(value)
     }
     increment(): number {
+        console.log('inc', this.num(), '->', this.num() + 1)
         this.set(this.num() + 1);
         return this.num()
     }
@@ -65,14 +68,22 @@ export class Pin {
 }
 
 export class IO {
-    data:            BitField = new BitField(8);
-    address:         BitField = new BitField(16);
-    busEnable:            Pin = new Pin();
-    NMI:                  Pin = new Pin();
-    ready:                Pin = new Pin(true);
-    reset:                Pin = new Pin(true);
-    readWrite:            Pin = new Pin();
-    interruptRequest:     Pin = new Pin();
+    private _data:            BitField = new BitField(8);
+    private _address:         BitField = new BitField(16);
+    private _busEnable:            Pin = new Pin();
+    private _NMI:                  Pin = new Pin();
+    private _ready:                Pin = new Pin(true);
+    private _reset:                Pin = new Pin(true);
+    private _readWrite:            Pin = new Pin();
+    private _interruptRequest:     Pin = new Pin();
+    get data()             {return this._data}
+    get address()          {return this._address}
+    get busEnable()        {return this._busEnable}
+    get NMI()              {return this._NMI}
+    get ready()            {return this._ready}
+    get reset()            {return this._reset}
+    get readWrite()        {return this._readWrite}
+    get interruptRequest() {return this._interruptRequest}
 }
 
 /**
@@ -111,7 +122,7 @@ export default class The65c02 {
     read: () => void;
     write: () => void;
     readPC(): BitField {
-        this.io.address = this.programCounter;
+        this.io.address.set(this.programCounter.num());
         this.read()
         return this.io.data;
     }
@@ -154,7 +165,7 @@ export default class The65c02 {
             throw `not found ${instruction}`
         if (!this.instructions[opm[instruction].mnemonic])
             throw `not implement, sowwy (${opm[instruction].mnemonic}.ts not found)`;
-        console.debug(opm[instruction].mnemonic, opm[instruction].mode)
+        console.debug(this.programCounter.num().toString(16).padStart(4, '0'),opm[instruction].mnemonic, opm[instruction].mode)
         this.instructions[opm[instruction].mnemonic].call(this, opm[instruction].mode);
     }
     //SECTION - utils
