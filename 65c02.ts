@@ -207,12 +207,20 @@ export default class The65c02 {
         const hi_abit = this.readPC().num()
         return ((hi_abit << 8) | lo_abit) + this.regY.num();
     }
-    getAddr(mode: string): number {
+    getAddr(mode: string, allow?: string[]): number {
+        if (allow && !allow.includes(mode))
+            throw 'disallowed mode'
         switch (mode) {
             case 'immediate':
                 this.programCounter.increment()
                 this.programCounter.increment()
                 return this.programCounter.num() - 1
+            // deno-lint-ignore no-case-declarations
+            case 'relative':
+                this.programCounter.increment()
+                const offset = this.readPC()
+                this.programCounter.increment()
+                return this.programCounter.num() + offset.num()
             case 'zero-page':
                 return this.getZPAddr()
             case 'zero-page, X-indexed':
