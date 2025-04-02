@@ -12,8 +12,6 @@ export class BitField {
         this.bits[bit] = value;
     }
     set(value: number) {
-        // if (this.num() == 259 && value == 0)
-        //     throw new Error('debug')
         for (let bit = 0; bit < this.bits.length; bit++) {
             const mask: number = 1 << bit;
             this.setBit(bit, (value & mask) != 0)
@@ -41,7 +39,6 @@ export class Register<T=number> extends BitField {
         this.set(value)
     }
     increment(): number {
-        console.log('inc', this.num(), '->', this.num() + 1)
         this.set(this.num() + 1);
         return this.num()
     }
@@ -94,10 +91,14 @@ export class IO {
 export default class The65c02 {
     io:                    IO = new IO();
     //SECTION - register
-    programCounter:  Register<16> = new Register(16);
-    regA:            Register<8>  = new Register(8);
-    regX:            Register<8>  = new Register(8);
-    regY:            Register<8>  = new Register(8);
+    programCounter:      Register<16> = new Register(16);
+    private registerA:    Register<8> = new Register(8);
+    private registerX:    Register<8> = new Register(8);
+    private registerY:    Register<8> = new Register(8);
+
+    get regA () { return this.registerA }
+    get regX () { return this.registerX }
+    get regY () { return this.registerY }
 
     stackPointer:    Register<8>  = new Register(8);
     status:          Register<8>  = new Register(8);

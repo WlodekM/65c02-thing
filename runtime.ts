@@ -53,13 +53,17 @@ cpu.cycle()
 //the cpu reset, pull RESB high and start execution!
 cpu.io.reset.HI()
 
+const debug = Deno.args.includes('-d')
+
 while (!cpu.io.interruptRequest.high) {
     cpu.cycle();
-    const i = new Uint8Array(8);
-    await Deno.stdin.read(i);
-    if (i[0] == 'b'.charCodeAt(0)) {
-        console.log('BREAK!!')
-        break;
+    if (debug) {
+        const i = new Uint8Array(8);
+        await Deno.stdin.read(i);
+        if (i[0] == 'b'.charCodeAt(0)) {
+            console.log('BREAK!!')
+            break;
+        }
     }
 }
 
