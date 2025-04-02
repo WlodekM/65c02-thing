@@ -158,6 +158,23 @@ export default class The65c02 {
         this.instructions[opm[instruction].mnemonic].call(this, opm[instruction].mode);
     }
     //SECTION - utils
+    /** push stuff onto stack */
+    push(val: number) {
+        if (this.stackPointer.num() >= 0xFF)
+            throw 'stack overflow (no, not like the website)';
+        this.stackPointer.increment();
+        this.io.address.set(0x01FF - this.stackPointer.num());
+        this.io.data.set(val);
+        this.write();
+    }
+    pop(): number {
+        if (this.stackPointer.num() <= 0)
+            throw 'stack underflow';
+        this.io.address.set(0x01FF - this.stackPointer.num());
+        this.read()
+        this.stackPointer.decrement();
+        return this.io.data.num()
+    }
     getZPAddr(): number {
         this.programCounter.increment()
         const zp = this.readPC().num()
