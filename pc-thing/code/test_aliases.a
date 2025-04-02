@@ -1,3 +1,0 @@
-start:
-    mov a 50
-    mov $0 a
