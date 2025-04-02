@@ -5,7 +5,7 @@ export default function (this: The65c02, mode: string) {
     this.io.address.set(addr);
     this.read()
     const mem = this.io.data.num();
-    const result = this.regA.num() + mem + +this.carry
-    this.flagZCN(result);
+    const result = this.regA.num() ^ mem
+    this.flagZN(result);
     this.regA.set(result & 0xFF);
 }
