@@ -7,6 +7,14 @@
         "mnemonic": "ORA",
         "mode": "indirect, Y-indexed"
     },
+    "12": {
+        "mnemonic": "ORA",
+        "mode": "zero-page indirect"
+    },
+    "14": {
+        "mnemonic": "TRB",
+        "mode": "zero-page"
+    },
     "15": {
         "mnemonic": "ORA",
         "mode": "zero-page, X-indexed"
@@ -14,6 +22,10 @@
     "16": {
         "mnemonic": "ASL",
         "mode": "zero-page, X-indexed"
+    },
+    "17": {
+        "mnemonic": "RMB1",
+        "mode": "zero-page"
     },
     "18": {
         "mnemonic": "CLC",
@@ -43,6 +55,10 @@
         "mnemonic": "ROL",
         "mode": "zero-page"
     },
+    "27": {
+        "mnemonic": "RMB2",
+        "mode": "zero-page"
+    },
     "28": {
         "mnemonic": "PLP",
         "mode": "implied"
@@ -59,6 +75,14 @@
         "mnemonic": "AND",
         "mode": "indirect, Y-indexed"
     },
+    "32": {
+        "mnemonic": "AND",
+        "mode": "zero-page indirect"
+    },
+    "34": {
+        "mnemonic": "BIT",
+        "mode": "zero-page, X-indexed"
+    },
     "35": {
         "mnemonic": "AND",
         "mode": "zero-page, X-indexed"
@@ -66,6 +90,10 @@
     "36": {
         "mnemonic": "ROL",
         "mode": "zero-page, X-indexed"
+    },
+    "37": {
+        "mnemonic": "RMB3",
+        "mode": "zero-page"
     },
     "38": {
         "mnemonic": "SEC",
@@ -91,6 +119,10 @@
         "mnemonic": "LSR",
         "mode": "zero-page"
     },
+    "47": {
+        "mnemonic": "RMB4",
+        "mode": "zero-page"
+    },
     "48": {
         "mnemonic": "PHA",
         "mode": "implied"
@@ -107,6 +139,10 @@
         "mnemonic": "EOR",
         "mode": "indirect, Y-indexed"
     },
+    "52": {
+        "mnemonic": "EOR",
+        "mode": "zero-page indirect"
+    },
     "55": {
         "mnemonic": "EOR",
         "mode": "zero-page, X-indexed"
@@ -114,6 +150,10 @@
     "56": {
         "mnemonic": "LSR",
         "mode": "zero-page, X-indexed"
+    },
+    "57": {
+        "mnemonic": "RMB5",
+        "mode": "zero-page"
     },
     "58": {
         "mnemonic": "CLI",
@@ -131,12 +171,20 @@
         "mnemonic": "ADC",
         "mode": "X-indexed, indirect"
     },
+    "64": {
+        "mnemonic": "STZ",
+        "mode": "zero-page"
+    },
     "65": {
         "mnemonic": "ADC",
         "mode": "zero-page"
     },
     "66": {
         "mnemonic": "ROR",
+        "mode": "zero-page"
+    },
+    "67": {
+        "mnemonic": "RMB6",
         "mode": "zero-page"
     },
     "68": {
@@ -155,6 +203,14 @@
         "mnemonic": "ADC",
         "mode": "indirect, Y-indexed"
     },
+    "72": {
+        "mnemonic": "ADC",
+        "mode": "zero-page indirect"
+    },
+    "74": {
+        "mnemonic": "STZ",
+        "mode": "zero-page, X-indexed"
+    },
     "75": {
         "mnemonic": "ADC",
         "mode": "zero-page, X-indexed"
@@ -163,6 +219,10 @@
         "mnemonic": "ROR",
         "mode": "zero-page, X-indexed"
     },
+    "77": {
+        "mnemonic": "RMB7",
+        "mode": "zero-page"
+    },
     "78": {
         "mnemonic": "SEI",
         "mode": "implied"
@@ -170,6 +230,10 @@
     "79": {
         "mnemonic": "ADC",
         "mode": "absolute, Y-indexed"
+    },
+    "80": {
+        "mnemonic": "BRA",
+        "mode": "relative"
     },
     "81": {
         "mnemonic": "STA",
@@ -187,9 +251,17 @@
         "mnemonic": "STX",
         "mode": "zero-page"
     },
+    "87": {
+        "mnemonic": "SMB0",
+        "mode": "zero-page"
+    },
     "88": {
         "mnemonic": "DEY",
         "mode": "implied"
+    },
+    "89": {
+        "mnemonic": "BIT",
+        "mode": "immediate"
     },
     "90": {
         "mnemonic": "BCC",
@@ -199,17 +271,25 @@
         "mnemonic": "STA",
         "mode": "indirect, Y-indexed"
     },
+    "92": {
+        "mnemonic": "STA",
+        "mode": "zero-page indirect"
+    },
     "94": {
         "mnemonic": "STY",
         "mode": "zero-page, X-indexed"
     },
     "95": {
-        "mnemonic": "STA; InsItr",
+        "mnemonic": "STA",
         "mode": "zero-page, X-indexed"
     },
     "96": {
         "mnemonic": "STX",
         "mode": "zero-page, Y-indexed"
+    },
+    "97": {
+        "mnemonic": "SMB1",
+        "mode": "zero-page"
     },
     "98": {
         "mnemonic": "TYA",
@@ -602,5 +682,169 @@
     "fe": {
         "mnemonic": "INC",
         "mode": "absolute, X-indexed"
+    },
+    "04": {
+        "mnemonic": "TSB",
+        "mode": "zero-page"
+    },
+    "07": {
+        "mnemonic": "RMB0",
+        "mode": "zero-page"
+    },
+    "0c": {
+        "mnemonic": "TSB",
+        "mode": "absolute"
+    },
+    "0f": {
+        "mnemonic": "BBR0",
+        "mode": "relative"
+    },
+    "1a": {
+        "mnemonic": "INC",
+        "mode": "accumulator (implied)"
+    },
+    "1c": {
+        "mnemonic": "TRB",
+        "mode": "absolute"
+    },
+    "1f": {
+        "mnemonic": "BBR1",
+        "mode": "relative"
+    },
+    "2f": {
+        "mnemonic": "BBR2",
+        "mode": "relative"
+    },
+    "3a": {
+        "mnemonic": "DEC",
+        "mode": "accumulator (implied)"
+    },
+    "3c": {
+        "mnemonic": "BIT",
+        "mode": "absolute, X-indexed"
+    },
+    "3f": {
+        "mnemonic": "BBR3",
+        "mode": "relative"
+    },
+    "4f": {
+        "mnemonic": "BBR4",
+        "mode": "relative"
+    },
+    "5a": {
+        "mnemonic": "PHY",
+        "mode": "implied"
+    },
+    "5f": {
+        "mnemonic": "BBR5",
+        "mode": "relative"
+    },
+    "6f": {
+        "mnemonic": "BBR6",
+        "mode": "relative"
+    },
+    "7a": {
+        "mnemonic": "PLY",
+        "mode": "implied"
+    },
+    "7c": {
+        "mnemonic": "JMP",
+        "mode": "absolute indexed indirect"
+    },
+    "7f": {
+        "mnemonic": "BBR7",
+        "mode": "relative"
+    },
+    "8f": {
+        "mnemonic": "BBS0",
+        "mode": "relative"
+    },
+    "9c": {
+        "mnemonic": "STZ",
+        "mode": "absolute"
+    },
+    "9e": {
+        "mnemonic": "STZ",
+        "mode": "absolute, X-indexed"
+    },
+    "9f": {
+        "mnemonic": "BBS1",
+        "mode": "relative"
+    },
+    "a7": {
+        "mnemonic": "SMB2",
+        "mode": "zero-page"
+    },
+    "af": {
+        "mnemonic": "BBS2",
+        "mode": "relative"
+    },
+    "b2": {
+        "mnemonic": "LDA",
+        "mode": "zero-page indirect"
+    },
+    "b7": {
+        "mnemonic": "SMB3",
+        "mode": "zero-page"
+    },
+    "bf": {
+        "mnemonic": "BBS3",
+        "mode": "relative"
+    },
+    "c7": {
+        "mnemonic": "SMB4",
+        "mode": "zero-page"
+    },
+    "cb": {
+        "mnemonic": "WAI",
+        "mode": "implied"
+    },
+    "cf": {
+        "mnemonic": "BBS4",
+        "mode": "relative"
+    },
+    "d2": {
+        "mnemonic": "CMP",
+        "mode": "zero-page indirect"
+    },
+    "d7": {
+        "mnemonic": "SMB5",
+        "mode": "zero-page"
+    },
+    "da": {
+        "mnemonic": "PHX",
+        "mode": "implied"
+    },
+    "db": {
+        "mnemonic": "STP",
+        "mode": "implied"
+    },
+    "df": {
+        "mnemonic": "BBS5",
+        "mode": "relative"
+    },
+    "e7": {
+        "mnemonic": "SMB6",
+        "mode": "zero-page"
+    },
+    "ef": {
+        "mnemonic": "BBS6",
+        "mode": "relative"
+    },
+    "f2": {
+        "mnemonic": "SBC",
+        "mode": "zero-page indirect"
+    },
+    "f7": {
+        "mnemonic": "SMB7",
+        "mode": "zero-page"
+    },
+    "fa": {
+        "mnemonic": "PLX",
+        "mode": "implied"
+    },
+    "ff": {
+        "mnemonic": "BBS7",
+        "mode": "relative"
     }
 }

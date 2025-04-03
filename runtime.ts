@@ -1,18 +1,9 @@
 import The65c02, { BitField, Pin } from "./65c02.ts";
-// import { instructionIds } from "./instructions.ts";
-import opcodeMatrix from "./opcode_matrix.json" with { type: "json" };
-
-function instruction(name: string | TemplateStringsArray, mode: string = 'implied'): number {
-    const goog = (Object.entries(opcodeMatrix).find(([_, v]) =>
-        v.mnemonic == name && v.mode == mode) ?? [])[0];
-    if (!goog)
-        throw `unknown instruction (${name}-${mode})`
-    return parseInt(goog, 16)
-}
 
 // the thing used for ram
 const ram = new Uint8Array(2**16);
 
+// initiate the emulator
 const cpu = new The65c02(function (this: The65c02) {
     // since this is controlled by the user it's easy
     // to map things into address space
@@ -26,24 +17,15 @@ await cpu.loadInstructions()
 
 // mem address $0000
 ram[0xFFFC] = 0x00
-ram[0xFFFD] = 0x01
+ram[0xFFFD] = 0x80
 
-//TODO: read code from file
-// const code = [
-//     // nop
-//     instruction`CLC`,
-//     // instruction`CLD`,
-//     instruction('INC', 'zero-page'),
-//     0x21,
-//     instruction`BRK`,
-// ]
-
-const code = Deno.readFileSync('a.out')
+// read code from file
+const code = Deno.readFileSync('msbasic/tmp/eater.bin')
 
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {
     const byte = code[offset];
-    ram[256 + offset] = byte;
+    ram[0x8000 + offset] = byte;
 }
 
 // pull RESB low to reset the 65c02
@@ -55,8 +37,11 @@ cpu.io.reset.HI()
 
 const debug = Deno.args.includes('-d')
 
+// repeat until the cpu requests an interrupt
 while (!cpu.io.interruptRequest.high) {
     cpu.cycle();
+
+    // debug step-by-step mode
     if (debug) {
         const i = new Uint8Array(8);
         await Deno.stdin.read(i);
@@ -84,6 +69,6 @@ console.log(` Y: ${cpu.regY.bits.map(k=>+k).join('')} (0x${cpu.regY.num().toStri
 
 console.debug('\nRAM:')
 Deno.writeFileSync('ram.bin', ram)
-new Deno.Command('hexdump', {
-    args: ['-C', 'ram.bin']
-}).spawn()
+// new Deno.Command('hexdump', {
+//     args: ['-C', 'ram.bin']
+// }).spawn()
