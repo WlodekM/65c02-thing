@@ -29,7 +29,7 @@
     },
     "18": {
         "mnemonic": "CLC",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "19": {
         "mnemonic": "ORA",
@@ -61,7 +61,7 @@
     },
     "28": {
         "mnemonic": "PLP",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "29": {
         "mnemonic": "AND",
@@ -97,7 +97,7 @@
     },
     "38": {
         "mnemonic": "SEC",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "39": {
         "mnemonic": "AND",
@@ -105,7 +105,7 @@
     },
     "40": {
         "mnemonic": "RTI",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "41": {
         "mnemonic": "EOR",
@@ -125,7 +125,7 @@
     },
     "48": {
         "mnemonic": "PHA",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "49": {
         "mnemonic": "EOR",
@@ -157,7 +157,7 @@
     },
     "58": {
         "mnemonic": "CLI",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "59": {
         "mnemonic": "EOR",
@@ -165,7 +165,7 @@
     },
     "60": {
         "mnemonic": "RTS",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "61": {
         "mnemonic": "ADC",
@@ -189,7 +189,7 @@
     },
     "68": {
         "mnemonic": "PLA",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "69": {
         "mnemonic": "ADC",
@@ -225,7 +225,7 @@
     },
     "78": {
         "mnemonic": "SEI",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "79": {
         "mnemonic": "ADC",
@@ -257,7 +257,7 @@
     },
     "88": {
         "mnemonic": "DEY",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "89": {
         "mnemonic": "BIT",
@@ -293,7 +293,7 @@
     },
     "98": {
         "mnemonic": "TYA",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "99": {
         "mnemonic": "STA",
@@ -301,7 +301,7 @@
     },
     "00": {
         "mnemonic": "BRK",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "01": {
         "mnemonic": "ORA",
@@ -317,7 +317,7 @@
     },
     "08": {
         "mnemonic": "PHP",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "09": {
         "mnemonic": "ORA",
@@ -325,7 +325,7 @@
     },
     "0a": {
         "mnemonic": "ASL",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "0d": {
         "mnemonic": "ORA",
@@ -345,7 +345,7 @@
     },
     "2a": {
         "mnemonic": "ROL",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "2c": {
         "mnemonic": "BIT",
@@ -369,7 +369,7 @@
     },
     "4a": {
         "mnemonic": "LSR",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "4c": {
         "mnemonic": "JMP",
@@ -393,7 +393,7 @@
     },
     "6a": {
         "mnemonic": "ROR",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "6c": {
         "mnemonic": "JMP",
@@ -417,7 +417,7 @@
     },
     "8a": {
         "mnemonic": "TXA",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "8c": {
         "mnemonic": "STY",
@@ -433,7 +433,7 @@
     },
     "9a": {
         "mnemonic": "TXS",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "9d": {
         "mnemonic": "STA",
@@ -465,7 +465,7 @@
     },
     "a8": {
         "mnemonic": "TAY",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "a9": {
         "mnemonic": "LDA",
@@ -473,7 +473,7 @@
     },
     "aa": {
         "mnemonic": "TAX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "ac": {
         "mnemonic": "LDY",
@@ -509,7 +509,7 @@
     },
     "b8": {
         "mnemonic": "CLV",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "b9": {
         "mnemonic": "LDA",
@@ -517,7 +517,7 @@
     },
     "ba": {
         "mnemonic": "TSX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "bc": {
         "mnemonic": "LDY",
@@ -553,7 +553,7 @@
     },
     "c8": {
         "mnemonic": "INY",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "c9": {
         "mnemonic": "CMP",
@@ -561,7 +561,7 @@
     },
     "ca": {
         "mnemonic": "DEX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "cc": {
         "mnemonic": "CPY",
@@ -593,7 +593,7 @@
     },
     "d8": {
         "mnemonic": "CLD",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "d9": {
         "mnemonic": "CMP",
@@ -629,7 +629,7 @@
     },
     "e8": {
         "mnemonic": "INX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "e9": {
         "mnemonic": "SBC",
@@ -637,7 +637,7 @@
     },
     "ea": {
         "mnemonic": "NOP",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "ec": {
         "mnemonic": "CPX",
@@ -669,7 +669,7 @@
     },
     "f8": {
         "mnemonic": "SED",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "f9": {
         "mnemonic": "SBC",
@@ -701,7 +701,7 @@
     },
     "1a": {
         "mnemonic": "INC",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "1c": {
         "mnemonic": "TRB",
@@ -717,7 +717,7 @@
     },
     "3a": {
         "mnemonic": "DEC",
-        "mode": "accumulator (implied)"
+        "mode": "implicit"
     },
     "3c": {
         "mnemonic": "BIT",
@@ -733,7 +733,7 @@
     },
     "5a": {
         "mnemonic": "PHY",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "5f": {
         "mnemonic": "BBR5",
@@ -745,7 +745,7 @@
     },
     "7a": {
         "mnemonic": "PLY",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "7c": {
         "mnemonic": "JMP",
@@ -797,7 +797,7 @@
     },
     "cb": {
         "mnemonic": "WAI",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "cf": {
         "mnemonic": "BBS4",
@@ -813,11 +813,11 @@
     },
     "da": {
         "mnemonic": "PHX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "db": {
         "mnemonic": "STP",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "df": {
         "mnemonic": "BBS5",
@@ -841,7 +841,7 @@
     },
     "fa": {
         "mnemonic": "PLX",
-        "mode": "implied"
+        "mode": "implicit"
     },
     "ff": {
         "mnemonic": "BBS7",

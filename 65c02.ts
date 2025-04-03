@@ -147,12 +147,15 @@ export default class The65c02 {
             let resetVector = 0;
             this.io.address.set(0xFFFC);
             this.read()
+            console.log('reset vector LO', this.io.data.num().toString(16))
             resetVector |= this.io.data.num();
             this.io.address.set(0xFFFD);
             this.read()
+            console.log('reset vector HI', this.io.data.num().toString(16))
             resetVector |= this.io.data.num() << 8;
             // move PC to RV
-            this.programCounter.set(resetVector)
+            this.programCounter.set(resetVector);
+            return;
         }
         this.io.address.set(this.programCounter.num());
         this.read();
@@ -204,6 +207,7 @@ export default class The65c02 {
         const lo_abit = this.readPC().num()
         this.programCounter.increment()
         const hi_abit = this.readPC().num()
+        this.programCounter.increment()
         return (hi_abit << 8) | lo_abit
     }
     getAbsoluteXAddr(): number {
@@ -211,6 +215,7 @@ export default class The65c02 {
         const lo_abit = this.readPC().num()
         this.programCounter.increment()
         const hi_abit = this.readPC().num()
+        this.programCounter.increment()
         return this.regX.num() + ((hi_abit << 8) | lo_abit)
     }
     getAbsoluteYAddr(): number {
@@ -218,6 +223,7 @@ export default class The65c02 {
         const lo_abit = this.readPC().num()
         this.programCounter.increment()
         const hi_abit = this.readPC().num()
+        this.programCounter.increment()
         return this.regX.num() + ((hi_abit << 8) | lo_abit)
     }
     getIndirectXAddr(): number {
@@ -281,7 +287,9 @@ export default class The65c02 {
                 this.programCounter.increment()
                 const offset = this.readPC()
                 this.programCounter.increment()
-                return this.programCounter.num() + offset.num()
+                const neg = offset.bit(7);
+                offset.setBit(7, false)
+                return this.programCounter.num() + (offset.num() * (neg ? -1 : 1))
             case 'zero-page':
                 return this.getZPAddr()
             case 'zero-page, X-indexed':
