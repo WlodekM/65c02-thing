@@ -1,5 +1,6 @@
 import The65c02, { BitField, Pin } from "./65c02.ts";
 import matrix from "./opcode_matrix.json" with { type: "json" };
+import { parseArgs } from "jsr:@std/cli/parse-args";
 
 // the thing used for ram
 const ram = new Uint8Array(2**16);
@@ -16,17 +17,24 @@ const cpu = new The65c02(function (this: The65c02) {
 
 await cpu.loadInstructions()
 
+const args = parseArgs(Deno.args)
+
+const binStart = parseInt(args.b ?? args.binStart ?? '8000', 16)
+
+if (Number.isNaN(binStart))
+    throw 'binStart is NaN!'
+
 // mem address $0000
-ram[0xFFFC] = 0x00
-ram[0xFFFD] = 0x00
+ram[0xFFFC] = binStart & 0x00FF
+ram[0xFFFD] = binStart & 0xFF00
 
 // read code from file
-const code = Deno.readFileSync('a.out')
+const code = Deno.readFileSync(args._.toString() || 'msbasic/tmp/eater.bin')
 
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {
     const byte = code[offset];
-    ram[0x0000 + offset] = byte;
+    ram[binStart  + offset] = byte;
 }
 
 // pull RESB low to reset the 65c02
@@ -102,7 +110,7 @@ while (!cpu.io.interruptRequest.high) {
         } else if (i[0] == 's'.charCodeAt(0)) {
             console.log('stack:')
             for (let i = 0; i < cpu.stackPointer.num(); i++) {
-                console.log(` ${i.toString(16).padStart(2, '0')} ${ram[0x01FF - i].toString(2).padStart(8, '0')} (0x${ram[0x01FF - i].toString(16).padStart(4, '0')} ${ram[0x01FF - i]})`)
+                console.log(` ${i.toString(16).padStart(2, '0')} ${ram[0x01FF - i].toString(2).padStart(8, '0')} (0x${ram[0x01FF - i].toString(16).padStart(4, '0')} ${ram[0x01FF - i].toString().padStart(3)})`)
             }
         } else if (i[0] == 'k'.charCodeAt(0)) {
             const num = +(new TextDecoder().decode(i.slice(1, 7)).replaceAll('\0', ''));
