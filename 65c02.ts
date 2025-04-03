@@ -190,11 +190,13 @@ export default class The65c02 {
     getZPAddr(): number {
         this.programCounter.increment()
         const zp = this.readPC().num()
+        this.programCounter.increment()
         return zp
     }
     getZPXAddr(): number {
         this.programCounter.increment()
         const zp = this.readPC().num()
+        this.programCounter.increment()
         return (this.regX.num() + zp) & 0xFF
     }
     getAbsoluteAddr(): number {
@@ -225,6 +227,7 @@ export default class The65c02 {
         const lo_abit = this.readPC().num()
         this.io.address.set((this.regX.num() + addr + 1) & 0xFF)
         const hi_abit = this.readPC().num()
+        this.programCounter.increment()
         return ((hi_abit << 8) | lo_abit)
     }
     getIndirectYAddr(): number {
@@ -234,7 +237,32 @@ export default class The65c02 {
         const lo_abit = this.readPC().num()
         this.io.address.set((addr + 1) & 0xFF)
         const hi_abit = this.readPC().num()
+        this.programCounter.increment()
         return ((hi_abit << 8) | lo_abit) + this.regY.num();
+    }
+    getZPI(): number {
+        this.programCounter.increment()
+        const addr = this.readPC().num()
+        this.io.address.set((addr) & 0xFF)
+        const lo_abit = this.readPC().num()
+        this.io.address.set((addr + 1) & 0xFF)
+        const hi_abit = this.readPC().num()
+        this.programCounter.increment()
+        return ((hi_abit << 8) | lo_abit);
+    }
+    getAbsIndexedIndirect(): number {
+        this.programCounter.increment()
+        let addr = this.readPC().num()
+        this.programCounter.increment()
+        addr |= this.readPC().num() << 8;
+        addr += this.regX.num();
+        addr &= 0xFFFF
+        this.io.address.set((addr) & 0xFF)
+        const lo_abit = this.readPC().num()
+        this.io.address.set((addr + 1) & 0xFF)
+        const hi_abit = this.readPC().num()
+        this.programCounter.increment()
+        return ((hi_abit << 8) | lo_abit);
     }
     getAddr(mode: string, allow?: string[]): number {
         if (allow && !allow.includes(mode))
@@ -244,6 +272,10 @@ export default class The65c02 {
                 this.programCounter.increment()
                 this.programCounter.increment()
                 return this.programCounter.num() - 1
+            case 'zero-page indirect':
+                return this.getZPI()
+            case 'absolute indexed indirect':
+                return this.getAbsIndexedIndirect();
             // deno-lint-ignore no-case-declarations
             case 'relative':
                 this.programCounter.increment()
