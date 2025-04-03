@@ -157,6 +157,22 @@ export default class The65c02 {
             this.programCounter.set(resetVector);
             return;
         }
+        if (this.io.interruptRequest.high && !this.IRQBDisable) {
+            console.log('interrupt!')
+            this.IRQBDisable = true;
+            this.push(this.programCounter.num() & 0x00FF)
+            this.push(this.programCounter.num() & 0xFF00)
+            this.push(this.status.num())
+            let interruptVector = 0;
+            this.io.address.set(0xFFFE);
+            this.read()
+            interruptVector |= this.io.data.num();
+            this.io.address.set(0xFFFF);
+            this.read()
+            interruptVector |= this.io.data.num() << 8;
+            this.programCounter.set(interruptVector);
+            return;
+        }
         this.io.address.set(this.programCounter.num());
         this.read();
         const instruction = this.io.data

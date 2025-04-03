@@ -11,8 +11,8 @@ _start:
 CHROUT:
                 pha
                 sta     ACIA_DATA
-                lda     #$FF
-.txdelay:       dec
-                bne    .txdelay
+;                 lda     #$FF
+; .txdelay:       dec
+;                 bne    .txdelay
                 pla
                 rts
