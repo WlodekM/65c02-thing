@@ -288,7 +288,7 @@ export default class The65c02 {
                 this.programCounter.increment()
                 const neg = offset.bit(7);
                 offset.setBit(7, false)
-                return this.programCounter.num() + (offset.num() * (neg ? -1 : 1))
+                return this.programCounter.num() + (offset.num() + (neg ? -128 : 0))
             case 'zero-page':
                 return this.getZPAddr()
             case 'zero-page, X-indexed':

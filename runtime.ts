@@ -11,6 +11,9 @@ const cpu = new The65c02(function (this: The65c02) {
     // to map things into address space
     this.io.data.set(ram[this.io.address.num()] ?? 0)
 }, function (this: The65c02) {
+    if (this.io.address.num() == 0x5000) {
+        return Deno.stdout.write(new Uint8Array([this.io.data.num()]))
+    }
     // write
     ram[this.io.address.num()] = this.io.data.num()
 })
@@ -56,11 +59,11 @@ function inspect() {
         }).join('\n'));
     
     console.log('\nregisters:')
-    console.log(` A:      ${cpu.regA.bits.map(k=>+k).join('')} (0x${cpu.regA.num().toString(16)})`)
-    console.log(` X:      ${cpu.regX.bits.map(k=>+k).join('')} (0x${cpu.regX.num().toString(16)})`)
-    console.log(` Y:      ${cpu.regY.bits.map(k=>+k).join('')} (0x${cpu.regY.num().toString(16)})`)
-    console.log(` SP:     ${cpu.stackPointer.bits.map(k=>+k).join('')} (0x${cpu.stackPointer.num().toString(16)})`)
-    console.log(` PC:     ${cpu.programCounter.bits.map(k=>+k).join('')} (0x${cpu.programCounter.num().toString(16)})`)
+    console.log(` A:      ${cpu.regA.bits.reverse().map(k=>+k).join('')} (0x${cpu.regA.num().toString(16)})`)
+    console.log(` X:      ${cpu.regX.bits.reverse().map(k=>+k).join('')} (0x${cpu.regX.num().toString(16)})`)
+    console.log(` Y:      ${cpu.regY.bits.reverse().map(k=>+k).join('')} (0x${cpu.regY.num().toString(16)})`)
+    console.log(` SP:     ${cpu.stackPointer.bits.reverse().map(k=>+k).join('')} (0x${cpu.stackPointer.num().toString(16)})`)
+    console.log(` PC:     ${cpu.programCounter.bits.reverse().map(k=>+k).join('')} (0x${cpu.programCounter.num().toString(16)})`)
 }
 
 const debug = Deno.args.includes('-d')
@@ -68,6 +71,10 @@ const debug = Deno.args.includes('-d')
 let skip = 0;
 let breakpoints: number[] = []
 let instBreakpoints: string[] = []
+
+if (debug) {
+    console.info('NOTE; the instructions are executed after input')
+}
 
 // repeat until the cpu requests an interrupt
 while (!cpu.io.interruptRequest.high) {
@@ -80,8 +87,8 @@ while (!cpu.io.interruptRequest.high) {
         break;
     }
     const instr = goog;
+    if (debug)
     console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
-    cpu.cycle();
 
     // debug step-by-step mode
     dbg: if (debug) {
@@ -95,7 +102,7 @@ while (!cpu.io.interruptRequest.high) {
             skip = 0;
             console.log('hit breakpoint on', cpu.programCounter.num().toString(16))
         }
-        if (skip > 0) {
+        if (skip != 0) {
             skip--
             break dbg;
         }
@@ -128,6 +135,7 @@ while (!cpu.io.interruptRequest.high) {
             console.log(`b - break, exit
 i - inspect
 s - inspect stack
+c - continue
 k[NUM] - skip
 r[ADR] - breakpoint
 g[ADR] - goto, change PC
@@ -140,8 +148,12 @@ I[INS] - breakpoint instruction`);
             const instr = new TextDecoder().decode(i.slice(1, 7)).replace('\n', '').replaceAll('\0', '')
             console.log(`instruction breakpoint set on`, instr)
             instBreakpoints.push(instr)
+        } else if (i[0] == 'c'.charCodeAt(0)) {
+            skip = -1
+            console.log(`continuing execution`)
         }
     }
+    cpu.cycle();
 }
 
 console.log('end of execution\n\n')
