@@ -169,7 +169,6 @@ export default class The65c02 {
             throw `not found ${instruction}`
         if (!this.instructions[opm[instruction].mnemonic])
             throw `not implement, sowwy (${opm[instruction].mnemonic}.ts not found)`;
-        console.debug(this.programCounter.num().toString(16).padStart(4, '0'),opm[instruction].mnemonic, opm[instruction].mode)
         this.instructions[opm[instruction].mnemonic].call(this, opm[instruction].mode);
     }
     //SECTION - utils
