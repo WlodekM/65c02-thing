@@ -1,3 +1,8 @@
-  lda #$55 ; put 55 into A
-  sta $00  ; put A into $0
-  brk
+_start:
+ lda #$78
+ jsr goog
+ cmp #$78
+ brk
+goog:
+ lda #$50
+ rts

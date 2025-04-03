@@ -18,15 +18,15 @@ await cpu.loadInstructions()
 
 // mem address $0000
 ram[0xFFFC] = 0x00
-ram[0xFFFD] = 0x80
+ram[0xFFFD] = 0x00
 
 // read code from file
-const code = Deno.readFileSync('msbasic/tmp/eater.bin')
+const code = Deno.readFileSync('a.out')
 
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {
     const byte = code[offset];
-    ram[0x8000 + offset] = byte;
+    ram[0x0000 + offset] = byte;
 }
 
 // pull RESB low to reset the 65c02
@@ -63,17 +63,20 @@ let instBreakpoints: string[] = []
 
 // repeat until the cpu requests an interrupt
 while (!cpu.io.interruptRequest.high) {
+    const instId = ram[cpu.programCounter.num()]
+        .toString(16)
+        .padStart(2, '0');
+    const goog = (matrix as Record<string, { mnemonic: string, mode: string }>)[instId];
+    if (!goog) {
+        console.log('uh', instId, 'unknown')
+        break;
+    }
+    const instr = goog;
+    console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
     cpu.cycle();
 
     // debug step-by-step mode
     dbg: if (debug) {
-        const goog = Object.entries(matrix).find(([k]) => k == ram[cpu.programCounter.num()].toString(16));
-        if (!goog) {
-            console.log('uh')
-            break dbg;
-        }
-        const instr = goog[1];
-        console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
         if (instBreakpoints.includes(instr.mnemonic)) {
             instBreakpoints = instBreakpoints.filter(k => k != instr.mnemonic)
             skip = 0;
