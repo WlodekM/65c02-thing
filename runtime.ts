@@ -24,12 +24,12 @@ const binStart = parseInt(args.b ?? args.binStart ?? '8000', 16)
 if (Number.isNaN(binStart))
     throw 'binStart is NaN!'
 
-// mem address $0000
-ram[0xFFFC] = binStart & 0x00FF
-ram[0xFFFD] = binStart & 0xFF00
-
 // read code from file
 const code = Deno.readFileSync(args._.toString() || 'msbasic/tmp/eater.bin')
+
+// mem address $0000
+ram[0xFFFC] = binStart & 0x00FF
+ram[0xFFFD] = (binStart & 0xFF00) >> 8
 
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {

@@ -8,6 +8,7 @@ export default function (this: The65c02, mode: string) {
         this.zero = result == 0
         this.carry = (mem & 1) != 0
         this.regA.set(result & 0xFF);
+        this.programCounter.increment()
     } else {
         const addr = this.getAddr(mode)
         this.io.address.set(addr);
