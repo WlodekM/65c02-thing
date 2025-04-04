@@ -1,5 +1,6 @@
 // deno-lint-ignore-file no-process-globals
 import The65c02 from "./65c02.ts";
+import matrix from "./opcode_matrix.json" with { type: "json" };
 // eater.ts
 // a runtime meant to mimic ben eater's 65c02 computer
 
@@ -71,6 +72,16 @@ const clock = setInterval(() => {
     }
     if(cpu.io.interruptRequest.high && !cpu.IRQBDisable)
         cpu.io.interruptRequest.LO();
+    const instId = ram[cpu.programCounter.num()]
+        .toString(16)
+        .padStart(2, '0');
+    const goog = (matrix as Record<string, { mnemonic: string, mode: string }>)[instId];
+    if (!goog) {
+        console.log('uh', instId, 'unknown')
+        throw 'oh no';
+    }
+    const instr = goog;
+    console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
     cpu.cycle();
 // 1MHz i think
-}, 1)
+}, 100)

@@ -23,6 +23,7 @@ await cpu.loadInstructions()
 const args = parseArgs(Deno.args)
 
 const binStart = parseInt(args.b ?? args.binStart ?? '8000', 16)
+const resVec = parseInt(args.s ?? args.start ?? binStart.toString(16), 16)
 
 if (Number.isNaN(binStart))
     throw 'binStart is NaN!'
@@ -30,19 +31,20 @@ if (Number.isNaN(binStart))
 // read code from file
 const code = Deno.readFileSync(args._.toString() || 'msbasic/tmp/eater.bin')
 
-// mem address $0000
-ram[0xFFFC] = binStart & 0x00FF
-ram[0xFFFD] = (binStart & 0xFF00) >> 8
-
 // write code to ram before execution
 for (let offset = 0; offset < code.length; offset++) {
     const byte = code[offset];
     ram[binStart  + offset] = byte;
 }
 
+// mem address $0000
+ram[0xFFFC] = resVec & 0x00FF
+ram[0xFFFD] = (resVec & 0xFF00) >> 8
+
 // pull RESB low to reset the 65c02
 cpu.io.reset.LO()
 cpu.cycle()
+// cpu.programCounter.set(0x13)
 
 //the cpu reset, pull RESB high and start execution!
 cpu.io.reset.HI()
@@ -71,6 +73,7 @@ const debug = Deno.args.includes('-d')
 let skip = 0;
 let breakpoints: number[] = []
 let instBreakpoints: string[] = []
+let memBreakpoints: number[] = []
 
 if (debug) {
     console.info('NOTE; the instructions are executed after input')
@@ -87,6 +90,12 @@ while (!cpu.io.interruptRequest.high) {
         console.log('uh', instId, 'unknown')
         break;
     }
+    let addr: number | undefined;
+    if (goog.mode != 'implied' && goog.mode != 'implicit') {
+        const pastPC = cpu.programCounter.num()
+        addr = cpu.getAddr(goog.mode);
+        cpu.programCounter.set(pastPC)
+    }
     const instr = goog;
     if (debug)
     console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
@@ -102,6 +111,11 @@ while (!cpu.io.interruptRequest.high) {
             breakpoints = breakpoints.filter(k => k != cpu.programCounter.num())
             skip = 0;
             console.log('hit breakpoint on', cpu.programCounter.num().toString(16))
+        }
+        if (addr && memBreakpoints.includes(addr)) {
+            memBreakpoints = memBreakpoints.filter(k => k != addr)
+            skip = 0;
+            console.log('hit breakpoint on', addr.toString(16))
         }
         if (skip != 0) {
             skip--
@@ -191,8 +205,17 @@ I[INS] - breakpoint instruction`);
                 ram[0x5000] = num;
                 ram[0x5001] = 0x08;
                 console.log(`set $5000 to 0x${num.toString(16).padStart(2, '0')} and $5001 to 08`)
-                console.log('skipping 8 cycles');
-                skip = 8;
+                console.log(`set breakpoint to accessing address 5000`)
+                memBreakpoints.push(0x5000)
+            } else if (i[0] == 'm'.charCodeAt(0)) {
+                const num = parseInt(new TextDecoder().decode(i.slice(1, 7)).replace('\n', '').replaceAll('\0', ''), 16);
+                if (Number.isNaN(num)) {
+                    console.log('NaN')
+                    break dbg;
+                }
+                console.log(`set breakpoint to accessing address`, num.toString(16))
+                memBreakpoints.push(num)
+                continue;
             }
             break;
         }

@@ -6,6 +6,8 @@ ACIA_CTRL	= $5003
 _start:
   lda #$64
   jsr CHROUT
+  lda #$20
+  pha
   BRK
 
 CHROUT:

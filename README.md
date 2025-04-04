@@ -29,4 +29,8 @@ commands:
  - `r[ADR]` - breakpoint
  - `g[ADR]` - goto, change PC
  - `I[INS]` - breakpoint instruction
- 
+
+# known issues
+
+ - supposedly this has some issues with relative addressing
+ - wozmon BRK's on RETURN, possibly related to the aforementioned relative addressing issues
