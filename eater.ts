@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-process-globals
 import The65c02 from "./65c02.ts";
 import matrix from "./opcode_matrix.json" with { type: "json" };
+import { type Buffer } from "node:buffer";
 // eater.ts
 // a runtime meant to mimic ben eater's 65c02 computer
 
@@ -30,6 +31,8 @@ const binStart = 0;
 
 await cpu.loadInstructions()
 
+cpu.stackPointer.set(0xff)
+
 const code = Deno.readFileSync('a.out')
 
 // mem address $0000
@@ -52,13 +55,11 @@ cpu.io.reset.HI()
 
 let running = true;
 
-process.stdin.on('data', (data) => {
+process.stdin.on('data', (data: Buffer) => {
     if (data[0] == 3)
         return running = false;
-    // console.log(`uh`, data[0], data[0].toString(16))
     ram[0x5000] = data[0];
     ram[0x5001] = 0x08;
-    // cpu.io.interruptRequest.HI();
 })
 
 // repeat until the cpu requests an interrupt
@@ -81,6 +82,9 @@ const clock = setInterval(() => {
         throw 'oh no';
     }
     const instr = goog;
+    console.log(`\
+       PC  AC XR YR SP NV-BDIZC
+6502: ${cpu.programCounter.num().toString(16).padStart(4, '0')} ${cpu.regA.num().toString(16).padStart(2, '0')} ${cpu.regX.num().toString(16).padStart(2, '0')} ${cpu.regY.num().toString(16).padStart(2, '0')} ${cpu.stackPointer.num().toString(16).padStart(2, '0')} ${cpu.stackPointer.num().toString(2).padStart(8, '0')}`)
     console.debug(cpu.programCounter.num().toString(16).padStart(4, '0'),instr.mnemonic, instr.mode)
     cpu.cycle();
 // 1MHz i think

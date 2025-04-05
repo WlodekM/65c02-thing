@@ -2,7 +2,9 @@ import The65c02, { BitField, Pin } from "./65c02.ts";
 import matrix from "./opcode_matrix.json" with { type: "json" };
 import { parseArgs } from "jsr:@std/cli/parse-args";
 
-const debug = Deno.args.includes('-d')
+const args = parseArgs(Deno.args)
+
+const debug = args.d
 
 // the thing used for ram
 const ram = new Uint8Array(2**16);
@@ -26,8 +28,6 @@ await cpu.loadInstructions()
 
 // test
 cpu.stackPointer.set(0xFF)
-
-const args = parseArgs(Deno.args)
 
 const binStart = parseInt(args.b ?? args.binStart ?? '8000', 16)
 const resVec = parseInt(args.s ?? args.start ?? binStart.toString(16), 16)

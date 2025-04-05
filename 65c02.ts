@@ -191,18 +191,18 @@ export default class The65c02 {
     /** push stuff onto stack */
     push(val: number) {
         if (this.stackPointer.num() == 0)
-            console.error('stack overflow (no, not like the website)');
-        this.stackPointer.increment();
-        this.io.address.set(0x01FF - this.stackPointer.num());
+            console.error(`stack overflow (no, not like the website)`);
+        this.stackPointer.decrement();
+        this.io.address.set(0x0100 | this.stackPointer.num());
         this.io.data.set(val);
         this.write();
     }
     pop(): number {
         if (this.stackPointer.num() == 0xFF)
             console.error('stack underflow');
-        this.io.address.set(0x01FF - this.stackPointer.num());
+        this.io.address.set(0x0100 | this.stackPointer.num());
         this.read()
-        this.stackPointer.decrement();
+        this.stackPointer.increment();
         return this.io.data.num()
     }
     getZPAddr(): number {
