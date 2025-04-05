@@ -2,6 +2,8 @@ import The65c02, { BitField, Pin } from "./65c02.ts";
 import matrix from "./opcode_matrix.json" with { type: "json" };
 import { parseArgs } from "jsr:@std/cli/parse-args";
 
+const debug = Deno.args.includes('-d')
+
 // the thing used for ram
 const ram = new Uint8Array(2**16);
 
@@ -12,6 +14,8 @@ const cpu = new The65c02(function (this: The65c02) {
     this.io.data.set(ram[this.io.address.num()] ?? 0)
 }, function (this: The65c02) {
     if (this.io.address.num() == 0x5000) {
+        if (debug)
+            return console.log('CHROUT', `0x${this.io.data.num().toString(16)}`, String.fromCharCode(this.io.data.num()))
         return Deno.stdout.write(new Uint8Array([this.io.data.num()]))
     }
     // write
@@ -19,6 +23,9 @@ const cpu = new The65c02(function (this: The65c02) {
 })
 
 await cpu.loadInstructions()
+
+// test
+cpu.stackPointer.set(0xFF)
 
 const args = parseArgs(Deno.args)
 
@@ -67,8 +74,6 @@ function inspect() {
     console.log(` SP: ${cpu.stackPointer.bits.reverse().map(k=>+k).join('')} (0x${cpu.stackPointer.num().toString(16)})`)
     console.log(` PC: ${cpu.programCounter.bits.reverse().map(k=>+k).join('')} (0x${cpu.programCounter.num().toString(16)})`)
 }
-
-const debug = Deno.args.includes('-d')
 
 let skip = 0;
 let breakpoints: number[] = []
@@ -160,7 +165,10 @@ c - continue
 k[NUM] - skip
 r[ADR] - breakpoint
 g[ADR] - goto, change PC
-I[INS] - breakpoint instruction`);
+I[INS] - breakpoint instruction
+:[ADDR]=[VAL] - set memory
+\\[ADDR] - get value
+m[ADDR] - set breakpoint on accessing that address`);
                 continue;
             } else if (i[0] == 'g'.charCodeAt(0)) {
                 const num = i[2] ? parseInt(new TextDecoder().decode(i.slice(1, 7)).replace('\n', '').replaceAll('\0', ''), 16) : cpu.programCounter.num();

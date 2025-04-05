@@ -190,7 +190,7 @@ export default class The65c02 {
     //SECTION - utils
     /** push stuff onto stack */
     push(val: number) {
-        if (this.stackPointer.num() >= 0xFF)
+        if (this.stackPointer.num() == 0)
             console.error('stack overflow (no, not like the website)');
         this.stackPointer.increment();
         this.io.address.set(0x01FF - this.stackPointer.num());
@@ -198,7 +198,7 @@ export default class The65c02 {
         this.write();
     }
     pop(): number {
-        if (this.stackPointer.num() <= 0)
+        if (this.stackPointer.num() == 0xFF)
             console.error('stack underflow');
         this.io.address.set(0x01FF - this.stackPointer.num());
         this.read()
