@@ -127,14 +127,20 @@ export default class The65c02 {
         this.read()
         return this.io.data;
     }
-    flagZN(num: number) {
+    flagZN(num: number): void {
         this.negative = (num & 0x80) != 0;
         this.zero = num == 0;
     }
-    flagZCN(num: number) {
-        this.carry = num > 0xFF
+    flagZCN(num: number): void {
+        this.carry = num > 0xFF || num < 0
         this.negative = (num & 0x80) != 0;
-        this.zero = num == 0;
+        this.zero = (num & 0xFF) == 0;
+    }
+
+    sign8(numb: BitField): number {
+        const neg = numb.bit(7);
+        numb.setBit(7, false)
+        return this.programCounter.num() + (numb.num() + (+neg * -128))
     }
     instructions: Record<string, (mode: string) => void> = {};
     cycle() {
@@ -299,12 +305,11 @@ export default class The65c02 {
                 return this.getAbsIndexedIndirect();
             // deno-lint-ignore no-case-declarations
             case 'relative':
+                //NOTE - seems to be broken,, somehow
                 this.programCounter.increment()
                 const offset = this.readPC()
                 this.programCounter.increment()
-                const neg = offset.bit(7);
-                offset.setBit(7, false)
-                return this.programCounter.num() + (offset.num() + (neg ? -128 : 0))
+                return this.sign8(offset)
             case 'zero-page':
                 return this.getZPAddr()
             case 'zero-page, X-indexed':

@@ -1,8 +1,15 @@
 import The65c02, { BitField, Pin } from "./65c02.ts";
 import matrix from "./opcode_matrix.json" with { type: "json" };
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import {crayon} from "jsr:@crayon/crayon@4.0.0-alpha.4";
 
 const args = parseArgs(Deno.args)
+
+if (args.op) {
+    const goog = (matrix as Record<string, { mnemonic: string, mode: string }>)[String(args.op).padStart(2, '0').toLowerCase()]
+    console.log(goog.mnemonic, goog.mode);
+    Deno.exit(0)
+}
 
 const debug = args.d
 
@@ -72,7 +79,17 @@ function inspect() {
     console.log(` X:  ${cpu.regX.bits.reverse().map(k=>+k).join('')} (0x${cpu.regX.num().toString(16)})`)
     console.log(` Y:  ${cpu.regY.bits.reverse().map(k=>+k).join('')} (0x${cpu.regY.num().toString(16)})`)
     console.log(` SP: ${cpu.stackPointer.bits.reverse().map(k=>+k).join('')} (0x${cpu.stackPointer.num().toString(16)})`)
-    console.log(` PC: ${cpu.programCounter.bits.reverse().map(k=>+k).join('')} (0x${cpu.programCounter.num().toString(16)})`)
+    console.log(` PC: ${cpu.programCounter.bits.reverse().map(k=>+k).join('')} (0x${cpu.programCounter.num().toString(16)}) [0x${(cpu.programCounter.num() * 2).toString(16)}]`)
+    console.log(` S:  ${cpu.status.bits.reverse().map(k=>+k).join('')} (${
+        'CZIDB-VN'.split('')
+        .map((a, i) => {
+            if (a == '-') return a;
+            const bit = cpu.status.bit(i);
+            if (bit)
+                return crayon.green(a)
+            return crayon.red(a)
+        }).reverse().join('')
+    })`)
 }
 
 let skip = 0;

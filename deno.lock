@@ -1,0 +1,21 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@crayon/crayon@4.0.0-alpha.4": "4.0.0-alpha.4",
+    "jsr:@crayon/crayon@^4.0.0-alpha.4": "4.0.0-alpha.4",
+    "jsr:@std/cli@*": "1.0.6"
+  },
+  "jsr": {
+    "@crayon/crayon@4.0.0-alpha.4": {
+      "integrity": "812afa0488d6b2a3691d23540493b2280e627ed0aa88ed8161625327b24467b2"
+    },
+    "@std/cli@1.0.6": {
+      "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@crayon/crayon@^4.0.0-alpha.4"
+    ]
+  }
+}
